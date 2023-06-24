@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 //        $this->call(UserSeeder::class);
 //        $this->call(CommentOnDateJobSeeder::class);
-//        $this->call(DateJobSeeder::class);
+        $this->call(DateJobSeeder::class);
         $this->call(GirlsProfileSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

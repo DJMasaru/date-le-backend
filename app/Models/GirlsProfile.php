@@ -16,4 +16,10 @@ class GirlsProfile extends Model
         'image_url',
         'user_id',
     ];
+
+    public function dateJob()
+    {
+        return $this->belongsTo(DateJob::class, 'girl_id', 'id');
+    }
+
 }

@@ -18,4 +18,10 @@ class DateJob extends Model
         'comment_count',
         'favorite_count',
     ];
+
+    public function girlsProfile()
+    {
+        return $this->hasOne(GirlsProfile::class, 'id', 'girl_id');
+    }
+
 }

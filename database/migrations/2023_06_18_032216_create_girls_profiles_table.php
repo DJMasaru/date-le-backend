@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('age');
             $table->string('occupation', 20);
             $table->string('image_url');
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

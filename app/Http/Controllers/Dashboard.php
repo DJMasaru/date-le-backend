@@ -13,29 +13,16 @@ class Dashboard extends Controller
     public function getUserInfo(Request $request)
     {
         $user = $request->user();
-        $jobs = DateJob::where('user_id',$user -> id )->get();
-        $jobAndProfile = [];
-        foreach ($jobs as $job) {
-            $girl = GirlsProfile::where('id', $job->girl_id)->first();
-            $jobData = $job->toArray();
-            $girlData = $girl->toArray();
+        $jobs = DateJob::where('user_id', $user->id)->with('girlsProfile')->get();
 
-            // girls_profilesテーブルから取得したデータを入れ子の配列に格納
-            $girlDataPrefixed = ['girls_profiles' => $girlData];
-
-            // $jobと$girlのデータをマージして$jobAndProfileに追加
-            $jobAndProfile[] = array_merge($jobData, $girlDataPrefixed);
-        }
-
-        Log::debug($jobAndProfile);
-        if (!$jobAndProfile) {
+        if (!$jobs) {
             // エラー文はフロント側で記述する
             return response()->json([], 500);
         }
 
         return response()->json([
             'user' => $user,
-            'jobAndProfile' => $jobAndProfile,
+            'jobAndProfile' => $jobs,
         ]);
     }
 }

@@ -14,6 +14,7 @@ class GirlsProfileSeeder extends Seeder
     public function run(): void
     {
         DB::table('girls_profiles')->insert([
+            [
             'name' => 'りこ',
             'age' => 22,
             'occupation' => '大手商社',
@@ -21,6 +22,16 @@ class GirlsProfileSeeder extends Seeder
             'user_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
+            ],
+            [
+            'name' => 'ゆい',
+            'age' => 23,
+            'occupation' => '大手銀行',
+            'image_url'=> 'hogehoge',
+            'user_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ]
         ]);
     }
 }

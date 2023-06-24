@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('date_jobs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->unique();
-            $table->unsignedBigInteger('girl_id')->unique();
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('girl_id')->constrained('girls_profiles');
             $table->date('date_of_date');
             $table->time('date_of_time');
             $table->string('date_of_place', 30);
