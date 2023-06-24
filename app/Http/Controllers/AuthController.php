@@ -40,11 +40,12 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        Log::debug($request);
         if (Auth::attempt($request->only('email', 'password'))) {
             // 認証に成功した場合の処理
             $user = User::where('email', $request['email'])->firstOrFail();
             $token = $user->createToken('auth_token')->plainTextToken;
-
+Log::debug($token);
             return response()->json([
                 'access_token' => $token,
                 'token_type' => 'Bearer',
@@ -52,7 +53,7 @@ class AuthController extends Controller
         } else {
             // 認証に失敗した場合の処理
             return response()->json([
-                'message' => 'Invalid login details'
+                'message' => 'ログインに失敗しました。入力情報を確認してください。'
             ], 401);
         }
     }
