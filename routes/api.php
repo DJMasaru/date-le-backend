@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,7 +17,8 @@ use App\Http\Controllers\Dashboard;
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // 認証が必要なルートを定義
-    Route::get('/user', [Dashboard::class, 'getUserInfo']);
+    Route::get('/user', [DashboardController::class, 'getUserInfo']);
+    Route::get('/date_detail', [DashboardController::class, 'getDateDetail']);
 });
 
 // 認証不要なルート

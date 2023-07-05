@@ -23,5 +23,8 @@ class DateJob extends Model
     {
         return $this->hasOne(GirlsProfile::class, 'id', 'girl_id');
     }
-
+    public function user()
+    {
+        return $this->hasMany(User::class,'id','user_id');
+    }
 }
