@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('comment_on_date_jobs', function (Blueprint $table) {
             $table->id();
             $table->string('value', 128);
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('girl_id');
-            $table->unsignedBigInteger('friend_id');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('job_id')->constrained('date_jobs');
             $table->timestamps();
         });
     }

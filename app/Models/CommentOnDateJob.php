@@ -12,7 +12,11 @@ class CommentOnDateJob extends Model
     protected $fillable = [
         'value',
         'user_id',
-        'girl_id',
-        'friend_id',
+        'job_id',
     ];
+
+    public function commentByUser()
+    {
+        return $this->hasMany(User::class,'id','user_id');
+    }
 }

@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CommentOnDateJobSeeder::class);
         $this->call(DateJobSeeder::class);
         $this->call(GirlsProfileSeeder::class);
+        $this->call(FriendshipSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

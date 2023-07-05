@@ -42,4 +42,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function comments()
+    {
+        return $this->belongsTo(CommentOnDateJob::class,'user_id','id');
+    }
+
+    public function dateJobs()
+    {
+        return $this->hasMany(DateJob::class,'user_id','id');
+    }
+
+    public function girlsProfile()
+    {
+        return $this->hasOne(GirlsProfile::class, 'id', 'girl_id');
+    }
 }
