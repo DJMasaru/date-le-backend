@@ -16,10 +16,12 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('girl_id')->constrained('girls_profiles');
             $table->date('date_of_date');
-            $table->time('date_of_time');
-            $table->string('date_of_place', 30);
+            $table->time('time_of_date');
+            $table->string('place_of_date', 30);
             $table->integer('comment_count');
             $table->integer('favorite_count');
+            $table->string('passion',30)->nullable();
+            $table->string('target',30)->nullable();
             $table->timestamps();
         });
     }
