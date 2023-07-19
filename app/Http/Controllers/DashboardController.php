@@ -15,6 +15,8 @@ class DashboardController extends Controller
     public function getUserInfo(Request $request)
     {
         $user = $request->user();
+
+        //詳細画面でもこのコードをもとにデートする女性の情報を取得している
         $jobs = DateJob::where('user_id', $user->id)->with('girlsProfile')->orderBy('date_of_date', 'asc')->get();
         $friendData = Friendship::where('user_id', $user->id)
             ->where('status', 1)
@@ -44,7 +46,9 @@ class DashboardController extends Controller
     {
         if(is_numeric($request->index)) {
             $user = $request->user();
-            $jobs = DateJob::where('user_id', $user->id)->with('girlsProfile')->get();
+
+            //ダッシュボードに表示されているジョブカードのインデックス番号をもとにデートする女性についても取得しているためこの記述
+            $jobs = DateJob::where('user_id', $user->id)->with('girlsProfile')->orderBy('date_of_date', 'asc')->get();
             $index = $request->index;
 
             //デートの詳細を確認するためのインデックス番号
@@ -52,6 +56,7 @@ class DashboardController extends Controller
             $comments = CommentOnDateJob::where('job_id',$selectedJob->id)->with('commentByUser')->get();
 
             return response()->json([
+                'user' => $user,
                 'jobs' => $selectedJob,
                 'comments' => $comments
             ]);

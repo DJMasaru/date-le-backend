@@ -14,10 +14,24 @@ return new class extends Migration
         Schema::create('girls_profiles', function (Blueprint $table) {
             $table->id();
             $table->string('name', 20);
-            $table->integer('age');
+            $table->integer('age')->nullable();
             $table->string('occupation', 20);
-            $table->string('image_url');
+            $table->string('image_url')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->string('feature_first',10);
+            $table->string('feature_second',10);
+            $table->string('feature_third',10);
+            $table->date('birthday')->nullable();
+            $table->string('address')->nullable();
+            $table->string('hobby')->nullable();
+            $table->string('character',20)->nullable();
+            $table->string('favorite_type_of_man')->nullable();
+            $table->string('favorite_foods')->nullable();
+            $table->string('dislike_foods')->nullable();
+            $table->string('opportunity_to_meet')->nullable();
+            $table->string('notice')->nullable();
+            $table->boolean('has_boyfriend')->nullable();
+            $table->integer('count_of_dates')->nullable();
             $table->timestamps();
         });
     }

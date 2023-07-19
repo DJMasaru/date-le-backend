@@ -13,8 +13,8 @@ class DateJob extends Model
         'user_id',
         'girl_id',
         'date_of_date',
-        'date_of_time',
-        'date_of_place',
+        'time_of_date',
+        'place_of_date',
         'comment_count',
         'favorite_count',
     ];
