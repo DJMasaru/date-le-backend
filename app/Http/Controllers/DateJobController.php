@@ -7,7 +7,7 @@ use App\Models\GirlsProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class MutateDateJobController extends Controller
+class DateJobController extends Controller
 {
     public function fetchGirlsList(Request $request)
     {

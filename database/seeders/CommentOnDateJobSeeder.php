@@ -14,21 +14,27 @@ class CommentOnDateJobSeeder extends Seeder
     public function run(): void
     {
         DB::table('comment_on_date_jobs')->insert([
+//            [
+//            'value' => 'さすが！頑張ってんな！',
+//            'user_id' => 2,
+//            'job_id' => 1,
+//            'created_at'=>now(),
+//            'updated_at'=>now(),
+//            ],
+//            [
+//            'value' => 'やるねえ',
+//            'user_id' => 3,
+//            'job_id' => 1,
+//            'created_at'=>now(),
+//            'updated_at'=>now(),
+//            ],
             [
-            'value' => 'さすが！頑張ってんな！',
-            'user_id' => 2,
-            'job_id' => 1,
-            'created_at'=>now(),
-            'updated_at'=>now(),
+                'value' => '友達のコメント取得完了',
+                'user_id' => 1,
+                'job_id' => 3,
+                'created_at'=>now(),
+                'updated_at'=>now(),
             ],
-            [
-            'value' => 'やるねえ',
-            'user_id' => 3,
-            'job_id' => 1,
-            'created_at'=>now(),
-            'updated_at'=>now(),
-            ],
-
         ]);
     }
 }
