@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name', 20);
             $table->integer('age')->nullable();
-            $table->string('occupation', 20);
+            $table->string('occupation', 20)->nullable();
             $table->string('image_url')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->string('feature_first',10);
-            $table->string('feature_second',10);
-            $table->string('feature_third',10);
+            $table->string('feature_first',10)->nullable();
+            $table->string('feature_second',10)->nullable();
+            $table->string('feature_third',10)->nullable();
             $table->date('birthday')->nullable();
             $table->string('address')->nullable();
             $table->string('hobby')->nullable();

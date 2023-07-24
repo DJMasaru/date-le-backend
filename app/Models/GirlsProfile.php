@@ -15,6 +15,20 @@ class GirlsProfile extends Model
         'occupation',
         'image_url',
         'user_id',
+        'feature_first',
+        'feature_second',
+        'feature_third',
+        'birthday',
+        'address',
+        'hobby',
+        'character',
+        'favorite_type_of_man',
+        'favorite_foods',
+        'dislike_foods',
+        'opportunity_to_meet',
+        'notice',
+        'has_boyfriend',
+        'count_of_dates',
     ];
 
     public function dateJob()
