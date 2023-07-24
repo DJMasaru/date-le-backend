@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\MutateDateJobController;
+use App\Http\Controllers\DateJobController;
+use App\Http\Controllers\GirlsInfoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -20,8 +21,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // 認証が必要なルートを定義
     Route::get('/user', [DashboardController::class, 'getUserInfo']);
     Route::get('/date_detail', [DashboardController::class, 'getDateDetail']);
-    Route::get('/girls_list', [MutateDateJobController::class, 'fetchGirlsList']);
-    Route::post('/make_date_job', [MutateDateJobController::class, 'makeDateJob']);
+    Route::get('/girls_list', [DateJobController::class, 'fetchGirlsList']);
+    Route::post('/make_date_job', [DateJobController::class, 'makeDateJob']);
+    Route::get('/girls_info', [GirlsInfoController::class, 'fetchGirlsInfo']);
+    Route::delete('/delete_girls_info', [GirlsInfoController::class, 'deleteGirlsInfo']);
+    Route::put('/edit_girls_info', [GirlsInfoController::class, 'editGirlsInfo']);
 });
 
 // 認証不要なルート

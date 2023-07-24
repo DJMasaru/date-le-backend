@@ -46,20 +46,47 @@ class DashboardController extends Controller
     {
         if(is_numeric($request->index)) {
             $user = $request->user();
-
-            //ダッシュボードに表示されているジョブカードのインデックス番号をもとにデートする女性についても取得しているためこの記述
-            $jobs = DateJob::where('user_id', $user->id)->with('girlsProfile')->orderBy('date_of_date', 'asc')->get();
             $index = $request->index;
+            if($request['type'] != 'friend') {
+                //ダッシュボードに表示されているジョブカードのインデックス番号をもとにデートする女性についても取得しているためこの記述
+                $jobs = DateJob::where('user_id', $user->id)->with('girlsProfile')->orderBy('date_of_date', 'asc')->get();
 
-            //デートの詳細を確認するためのインデックス番号
-            $selectedJob = $jobs->get($index);
-            $comments = CommentOnDateJob::where('job_id',$selectedJob->id)->with('commentByUser')->get();
+                //デートの詳細を確認するためのインデックス番号
+                $selectedJob = $jobs->get($index);
+                $comments = CommentOnDateJob::where('job_id', $selectedJob->id)->with('commentByUser')->get();
 
-            return response()->json([
-                'user' => $user,
-                'jobs' => $selectedJob,
-                'comments' => $comments
-            ]);
+                return response()->json([
+                    'user' => $user,
+                    'jobs' => $selectedJob,
+                    'comments' => $comments,
+                ]);
+
+            }else{
+
+            //友人のデート詳細を取得
+            $friendData = Friendship::where('user_id', $user->id)
+                ->where('status', 1)
+                ->get();
+
+            //友達のIDを取得
+            $friendIds = $friendData->pluck('friend_id');
+
+            $selectedFriendJob = User::whereIn('id', $friendIds)
+            ->with(['dateJobs' => function ($q) {
+                $q->with('girlsProfile');
+            }])
+            ->get()
+            ->get($index);
+
+            $dateJobIds = $selectedFriendJob->dateJobs->pluck('id');
+            $friendComments = CommentOnDateJob::where('job_id', $dateJobIds)->with('commentByUser')->get();
+            }
+
+        return response()->json([
+            'user' => $user,
+            'friendDatejobs' => $selectedFriendJob,
+            'friendDatecomments' => $friendComments,
+        ]);
         }
     }
 }
