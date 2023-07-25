@@ -78,8 +78,6 @@ class GirlsInfoController extends Controller
                 'notice' => $request->input('notice') ?: $updateGirl->notice,
             ]);
 
-            Log::debug($updateGirl);
-            // ここで更新が完了した後の処理を行う
         } catch (\Exception $e) {
             // その他の例外が発生した場合の処理
             Log::error($e->getMessage()); // エラーメッセージをログに出力

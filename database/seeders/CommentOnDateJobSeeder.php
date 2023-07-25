@@ -29,11 +29,11 @@ class CommentOnDateJobSeeder extends Seeder
             'updated_at'=>now(),
             ],
             [
-                'value' => '友達のコメント取得完了',
-                'user_id' => 1,
-                'job_id' => 3,
-                'created_at'=>now(),
-                'updated_at'=>now(),
+            'value' => '友達のコメント取得完了',
+            'user_id' => 1,
+            'job_id' => 3,
+            'created_at'=>now(),
+            'updated_at'=>now(),
             ],
         ]);
     }

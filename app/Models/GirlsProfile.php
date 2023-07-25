@@ -36,4 +36,9 @@ class GirlsProfile extends Model
         return $this->belongsTo(DateJob::class, 'girl_id', 'id');
     }
 
+    public function logDateJob()
+    {
+        return $this->belongsTo(LogDateJob::class, 'girl_id', 'id');
+    }
+
 }

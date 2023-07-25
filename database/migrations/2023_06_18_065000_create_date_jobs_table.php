@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('girl_id')->constrained('girls_profiles');
-            $table->date('date_of_date');
-            $table->time('time_of_date');
-            $table->string('place_of_date', 30);
-            $table->integer('comment_count');
-            $table->integer('favorite_count');
+            $table->date('date_of_date')->nullable();
+            $table->time('time_of_date')->nullable();
+            $table->string('place_of_date', 30)->nullable();
+            $table->integer('comment_count')->nullable();
+            $table->integer('favorite_count')->nullable();
             $table->string('passion',30)->nullable();
             $table->string('target',30)->nullable();
             $table->timestamps();
