@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/girls_info', [GirlsInfoController::class, 'fetchGirlsInfo']);
     Route::delete('/delete_girls_info', [GirlsInfoController::class, 'deleteGirlsInfo']);
     Route::put('/edit_girls_info', [GirlsInfoController::class, 'editGirlsInfo']);
+    Route::get('/log_date_job', [\App\Http\Controllers\LogDateJobController::class, 'fetchDateLog']);
 });
 
 // 認証不要なルート

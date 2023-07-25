@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasMany(DateJob::class,'user_id','id');
     }
 
+    public function logDateJobs()
+    {
+        return $this->hasMany(LogDateJob::class,'user_id','id');
+    }
+
     public function girlsProfile()
     {
         return $this->hasOne(GirlsProfile::class, 'id', 'girl_id');

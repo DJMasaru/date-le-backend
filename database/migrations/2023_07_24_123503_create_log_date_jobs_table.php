@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('date_jobs', function (Blueprint $table) {
+        Schema::create('log_date_jobs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('girl_id')->constrained('girls_profiles');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('date_jobs');
+        Schema::dropIfExists('log_date_jobs');
     }
 };
