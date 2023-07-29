@@ -22,7 +22,7 @@ class DashboardController extends Controller
             ->where('status', 1)
             ->get();
 
-        $friendIds = $friendData->pluck('friend_id'); // 友達のIDを取得
+        $friendIds = $friendData->pluck('followed_user_id'); // 友達のIDを取得
 
         $friendDateJobs = User::whereIn('id', $friendIds)
             ->with(['dateJobs' => function ($q) {
@@ -69,7 +69,7 @@ class DashboardController extends Controller
                 ->get();
 
             //友達のIDを取得
-            $friendIds = $friendData->pluck('friend_id');
+            $friendIds = $friendData->pluck('followed_user_id');
 
             $selectedFriendJob = User::whereIn('id', $friendIds)
             ->with(['dateJobs' => function ($q) {

@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\DateJobController;
+use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\GirlsInfoController;
+use App\Http\Controllers\LogDateJobController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -26,7 +28,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/girls_info', [GirlsInfoController::class, 'fetchGirlsInfo']);
     Route::delete('/delete_girls_info', [GirlsInfoController::class, 'deleteGirlsInfo']);
     Route::put('/edit_girls_info', [GirlsInfoController::class, 'editGirlsInfo']);
-    Route::get('/log_date_job', [\App\Http\Controllers\LogDateJobController::class, 'fetchDateLog']);
+    Route::get('/log_date_job', [LogDateJobController::class, 'fetchDateLog']);
+    Route::get('/friendship', [FriendshipController::class, 'fetchFriendship']);
+    Route::get('/friend_info', [FriendshipController::class, 'fetchFriendInfo']);
+    Route::delete('/delete_friendship_status', [FriendshipController::class, 'deleteFriendshipStatus']);
+    Route::put('/put_friendship_status', [FriendshipController::class, 'putFriendshipStatus']);
+    Route::post('/post_friendship_status', [FriendshipController::class, 'postFriendshipStatus']);
 });
 
 // 認証不要なルート

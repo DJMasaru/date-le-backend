@@ -18,34 +18,61 @@ class FriendshipSeeder extends Seeder
         DB::table('friendships')->insert([
             [
                 'user_id' => '1',
-                'friend_id' => '2',
+                'followed_user_id' => '2',
                 'status' => 1,
             ],
             [
                 'user_id' => '1',
-                'friend_id' => '3',
+                'followed_user_id' => '3',
                 'status' => 1,
             ],
             [
                 'user_id' => '1',
-                'friend_id' => '4',
+                'followed_user_id' => '4',
+                'status' => 1,
+            ],
+            [
+                'user_id' => '5',
+                'followed_user_id' => '1',
+                'status' => 2,
+            ],
+            [
+                'user_id' => '1',
+                'followed_user_id' => '6',
                 'status' => 1,
             ],
             [
                 'user_id' => '1',
-                'friend_id' => '5',
+                'followed_user_id' => '7',
+                'status' => 1,
+            ],
+            [
+                'user_id' => '2',
+                'followed_user_id' => '1',
+                'status' => 1,
+            ],
+            [
+                'user_id' => '3',
+                'followed_user_id' => '1',
+                'status' => 1,
+            ],
+            [
+                'user_id' => '4',
+                'followed_user_id' => '1',
+                'status' => 1,
+            ],
+            [
+                'user_id' => '8',
+                'followed_user_id' => '1',
                 'status' => 1,
             ],
             [
                 'user_id' => '1',
-                'friend_id' => '6',
-                'status' => 1,
+                'followed_user_id' => '8',
+                'status' => 2,
             ],
-            [
-                'user_id' => '1',
-                'friend_id' => '7',
-                'status' => 1,
-            ],
+
+
         ]);
     }
 }
