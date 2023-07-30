@@ -52,7 +52,6 @@ class DateJobController extends Controller
             $newDateJob->place_of_date = $request['placeOfDate'];
             $newDateJob->passion = $request['passion'];
             $newDateJob->target = $request['target'];
-            $newDateJob->comment_count = 0;
             $newDateJob->favorite_count = 0;
 
             $newDateJob->save();

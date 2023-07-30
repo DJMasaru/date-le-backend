@@ -16,7 +16,8 @@ return new class extends Migration
             $table->date('birthday')->nullable();
             $table->string('address')->nullable();
             $table->string('hobby')->nullable();
-            $table->string('girl_experiences')->nullable();
+            $table->integer('girl_experiences')->nullable();
+            $table->integer('age')->nullable();
             $table->string('favorite_date_place')->nullable();
             $table->string('favorite_date_time')->nullable();
             $table->string('favorite_clothes')->nullable();

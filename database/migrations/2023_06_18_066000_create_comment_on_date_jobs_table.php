@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('comment_on_date_jobs', function (Blueprint $table) {
             $table->id();
             $table->string('value', 128);
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('job_id')->constrained('date_jobs');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('job_id')->constrained('date_jobs')->onDelete('cascade');
             $table->timestamps();
         });
     }

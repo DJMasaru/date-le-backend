@@ -17,7 +17,12 @@ class DashboardController extends Controller
         $user = $request->user();
 
         //詳細画面でもこのコードをもとにデートする女性の情報を取得している
-        $jobs = DateJob::where('user_id', $user->id)->with('girlsProfile')->orderBy('date_of_date', 'asc')->get();
+        $jobs = DateJob::where('user_id', $user->id)
+            ->with('girlsProfile')
+            ->withCount('comment')
+            ->orderBy('date_of_date', 'asc')
+            ->get();
+
         $friendData = Friendship::where('user_id', $user->id)
             ->where('status', 1)
             ->get();
@@ -26,7 +31,8 @@ class DashboardController extends Controller
 
         $friendDateJobs = User::whereIn('id', $friendIds)
             ->with(['dateJobs' => function ($q) {
-                $q->with('girlsProfile');
+                $q->with('girlsProfile')
+                    ->withCount('comment');
             }])
             ->get();
 
@@ -49,11 +55,17 @@ class DashboardController extends Controller
             $index = $request->index;
             if($request['type'] != 'friend') {
                 //ダッシュボードに表示されているジョブカードのインデックス番号をもとにデートする女性についても取得しているためこの記述
-                $jobs = DateJob::where('user_id', $user->id)->with('girlsProfile')->orderBy('date_of_date', 'asc')->get();
-
+                $jobs = DateJob::where('user_id', $user->id)
+                    ->with('girlsProfile')
+                    ->withCount('comment')
+                    ->orderBy('date_of_date', 'asc')
+                    ->get();
+Log::debug($jobs);
                 //デートの詳細を確認するためのインデックス番号
                 $selectedJob = $jobs->get($index);
-                $comments = CommentOnDateJob::where('job_id', $selectedJob->id)->with('commentByUser')->get();
+                $comments = CommentOnDateJob::where('job_id', $selectedJob->id)
+                    ->with('commentByUser')
+                    ->get();
 
                 return response()->json([
                     'user' => $user,
@@ -73,7 +85,8 @@ class DashboardController extends Controller
 
             $selectedFriendJob = User::whereIn('id', $friendIds)
             ->with(['dateJobs' => function ($q) {
-                $q->with('girlsProfile');
+                $q->with('girlsProfile')
+                    ->withCount('comment');
             }])
             ->get()
             ->get($index);

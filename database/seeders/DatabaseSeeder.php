@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-//        $this->call(UserSeeder::class);
-//        $this->call(CommentOnDateJobSeeder::class);
-//        $this->call(DateJobSeeder::class);
-//        $this->call(GirlsProfileSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(CommentOnDateJobSeeder::class);
+        $this->call(DateJobSeeder::class);
+        $this->call(GirlsProfileSeeder::class);
         $this->call(FriendshipSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
