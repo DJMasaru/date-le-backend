@@ -53,7 +53,6 @@ class MakeDateJobCommand extends Command
                     $logDateJob->date_of_date = $record->date_of_date;
                     $logDateJob->time_of_date = $record->time_of_date;
                     $logDateJob->place_of_date = $record->place_of_date;
-                    $logDateJob->comment_count = $record->comment_count;
                     $logDateJob->favorite_count = $record->favorite_count;
                     $logDateJob->passion = $record->passion;
                     $logDateJob->target = $record->target;

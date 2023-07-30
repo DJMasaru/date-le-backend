@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CommentOnDateJob;
 use App\Models\DateJob;
 use App\Models\GirlsProfile;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -28,18 +29,7 @@ class GirlsInfoController extends Controller
         try {
             $id = $request['girlsInfo']['id'];
 
-            // GirlsProfileを削除する前に、関連するDateJobレコードを削除
-            // DateJobのid番号を保持
-            $dateJobIds = DateJob::where('girl_id', $id)->pluck('id');
-
-            // DateJobを削除する前に、関連するCommentOnDateJobレコードを削除
-            CommentOnDateJob::whereIn('job_id', $dateJobIds)->delete();
-
-            // DateJobを削除
-            DateJob::where('girl_id', $id)->delete();
-
-            // GirlsProfileを削除
-            GirlsProfile::where('id', $id)->delete();
+            User::where('id', $id)->delete();
 
             return response()->json(['message' => '削除に成功しました']);
         } catch (\Exception $e) {

@@ -4,6 +4,7 @@ use App\Http\Controllers\DateJobController;
 use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\GirlsInfoController;
 use App\Http\Controllers\LogDateJobController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -34,6 +35,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/delete_friendship_status', [FriendshipController::class, 'deleteFriendshipStatus']);
     Route::put('/put_friendship_status', [FriendshipController::class, 'putFriendshipStatus']);
     Route::post('/post_friendship_status', [FriendshipController::class, 'postFriendshipStatus']);
+    Route::get('/user_profile', [UserProfileController::class, 'fetchUserProfile']);
+    Route::delete('/delete_user', [UserProfileController::class, 'deleteUserProfile']);
+    Route::put('/edit_user_profile', [UserProfileController::class, 'editUserProfile']);
 });
 
 // 認証不要なルート

@@ -15,7 +15,6 @@ class DateJob extends Model
         'date_of_date',
         'time_of_date',
         'place_of_date',
-        'comment_count',
         'favorite_count',
     ];
 
@@ -27,4 +26,11 @@ class DateJob extends Model
     {
         return $this->hasMany(User::class,'id','user_id');
     }
+
+    public function comment()
+    {
+        //先方モデルの持つキーが第二引数、それと合致するこちら側のキーが第三引数
+        return $this->hasMany(CommentOnDateJob::class, 'job_id', 'id');
+    }
+
 }

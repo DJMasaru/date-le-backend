@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('friendships', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('followed_user_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('followed_user_id')->constrained('users')->onDelete('cascade');
             $table->integer('status');
             $table->timestamps();
         });

@@ -18,10 +18,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name','age', 'email', 'password', 'occupation', 'notice', 'image_url','birthday',
+        'hobby', 'girl_experiences', 'favorite_feature', 'favorite_date_time',
+        'favorite_date_place', 'favorite_clothes', 'favorite_character', 'favorite_age_range',
+        'address',
     ];
+
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -61,5 +64,15 @@ class User extends Authenticatable
     public function girlsProfile()
     {
         return $this->hasOne(GirlsProfile::class, 'id', 'girl_id');
+    }
+
+    public function friendships()
+    {
+        return $this->hasMany(Friendship::class, 'user_id');
+    }
+
+    public function followedUsers()
+    {
+        return $this->hasMany(Friendship::class, 'followed_user_id');
     }
 }

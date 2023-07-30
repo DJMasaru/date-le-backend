@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('log_date_jobs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('girl_id')->constrained('girls_profiles');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('girl_id')->constrained('girls_profiles')->onDelete('cascade');
             $table->date('date_of_date')->nullable();
             $table->time('time_of_date')->nullable();
             $table->string('place_of_date', 30)->nullable();
-            $table->integer('comment_count')->nullable();
             $table->integer('favorite_count')->nullable();
             $table->string('passion',30)->nullable();
             $table->string('target',30)->nullable();
