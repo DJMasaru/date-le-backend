@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         'name' => 'test',
         'email' => 'example@example.example',
         'email_verified_at' => now(),
-        'password'=>Hash::make('Kisiemon@0803'),
+        'password'=>Hash::make('exampleexample'),
         'image_url'=>'hoge',
         'occupation' => 'Web開発者',
         'birthday' => '1994-08-03',
