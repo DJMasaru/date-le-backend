@@ -53,6 +53,7 @@ class DashboardController extends Controller
         if(is_numeric($request->index)) {
             $user = $request->user();
             $index = $request->index;
+
             if($request['type'] != 'friend') {
                 //ダッシュボードに表示されているジョブカードのインデックス番号をもとにデートする女性についても取得しているためこの記述
                 $jobs = DateJob::where('user_id', $user->id)
@@ -60,7 +61,7 @@ class DashboardController extends Controller
                     ->withCount('comment')
                     ->orderBy('date_of_date', 'asc')
                     ->get();
-Log::debug($jobs);
+
                 //デートの詳細を確認するためのインデックス番号
                 $selectedJob = $jobs->get($index);
                 $comments = CommentOnDateJob::where('job_id', $selectedJob->id)
@@ -68,7 +69,6 @@ Log::debug($jobs);
                     ->get();
 
                 return response()->json([
-                    'user' => $user,
                     'jobs' => $selectedJob,
                     'comments' => $comments,
                 ]);
@@ -96,7 +96,6 @@ Log::debug($jobs);
             }
 
         return response()->json([
-            'user' => $user,
             'friendDatejobs' => $selectedFriendJob,
             'friendDatecomments' => $friendComments,
         ]);
