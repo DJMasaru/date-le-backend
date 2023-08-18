@@ -18,7 +18,6 @@ return new class extends Migration
             $table->date('date_of_date')->nullable();
             $table->time('time_of_date')->nullable();
             $table->string('place_of_date', 30)->nullable();
-            $table->integer('favorite_count')->nullable();
             $table->string('passion',30)->nullable();
             $table->string('target',30)->nullable();
             $table->timestamps();

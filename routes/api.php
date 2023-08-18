@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user_profile', [UserProfileController::class, 'fetchUserProfile']);
     Route::delete('/delete_user', [UserProfileController::class, 'deleteUserProfile']);
     Route::put('/edit_user_profile', [UserProfileController::class, 'editUserProfile']);
+    Route::post('/upload_user_image', [UserProfileController::class, 'uploadUserImage']);
 });
 
 // 認証不要なルート
