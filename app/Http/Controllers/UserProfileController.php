@@ -10,6 +10,7 @@ use App\Models\LogDateJob;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class UserProfileController extends Controller
 {
@@ -42,7 +43,7 @@ class UserProfileController extends Controller
             $updateUser->update([
                 'name' => $request->input('name') ?: $updateUser->name,
                 'age' => $request->input('age') ?: $updateUser->age,
-                // 'image_url' => $request->input('image_url') ?: $updateUser->image_url,
+                'image_url' => $request->input('image_url') ?: $updateUser->image_url,
                 'occupation' =>$request->input('occupation') ?: $updateUser->occupation,
                 'address' => $request->input('address') ?: $updateUser->address,
                 'hobby' => $request->input('hobby') ?: $updateUser->hobby,
@@ -63,6 +64,24 @@ class UserProfileController extends Controller
             Log::error($e->getMessage()); // エラーメッセージをログに出力
             // エラーメッセージを返す
             return 'Error occurred.';
+        }
+    }
+
+    public function uploadUserImage(Request $request)
+    {
+        try {
+            $user = $request->user();
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imagePath = $image->store('user_images', 's3');
+
+                // S3に保存された画像のURLを取得
+                return Storage::disk('s3')->url($imagePath);
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['message' => '画像のアップロードに失敗しました。'], 500);
         }
     }
 }

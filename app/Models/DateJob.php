@@ -15,7 +15,6 @@ class DateJob extends Model
         'date_of_date',
         'time_of_date',
         'place_of_date',
-        'favorite_count',
     ];
 
     public function girlsProfile()
