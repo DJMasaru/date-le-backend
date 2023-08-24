@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\LogDateJob;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DateJobSeeder::class);
         $this->call(GirlsProfileSeeder::class);
         $this->call(FriendshipSeeder::class);
+        $this->call(LogDateJobSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

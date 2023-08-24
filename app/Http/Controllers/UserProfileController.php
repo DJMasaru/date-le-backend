@@ -40,23 +40,24 @@ class UserProfileController extends Controller
 
             $updateUser = User::where('id', $user['id'])
                 ->first();
+
+            //空欄で更新されてもそれが有効になる
             $updateUser->update([
-                'name' => $request->input('name') ?: $updateUser->name,
-                'age' => $request->input('age') ?: $updateUser->age,
+                'name' => $request->input('name'),
+                'age' => $request->input('age'),
                 'image_url' => $request->input('image_url') ?: $updateUser->image_url,
-                'occupation' =>$request->input('occupation') ?: $updateUser->occupation,
-                'address' => $request->input('address') ?: $updateUser->address,
-                'hobby' => $request->input('hobby') ?: $updateUser->hobby,
-                'birthday' => $request->input('birthday') ?: $updateUser->birthday,
-                'girl_experiences' => $request->input('girl_experiences') ?: $user->girl_experiences,
-                'favorite_feature' => $request->input('favorite_feature') ?: $user->favorite_feature,
-                'favorite_date_time' => $request->input('favorite_date_time') ?: $user->favorite_date_time,
-                'favorite_date_place' => $request->input('favorite_date_place') ?: $user->favorite_date_place,
-                'favorite_clothes' => $request->input('favorite_clothes') ?: $user->favorite_clothes,
-                'favorite_character' => $request->input('favorite_character') ?: $user->favorite_character,
-                'favorite_age_range' => $request->input('favorite_age_range') ?: $user->favorite_age_range,
-                'notice' => $request->input('notice') ?: $user->notice,
-                // 他のプロパティに対応する更新処理を追加する
+                'occupation' =>$request->input('occupation'),
+                'address' => $request->input('address'),
+                'hobby' => $request->input('hobby'),
+                'birthday' => $request->input('birthday') ,
+                'girl_experiences' => $request->input('girl_experiences'),
+                'favorite_feature' => $request->input('favorite_feature'),
+                'favorite_date_time' => $request->input('favorite_date_time'),
+                'favorite_date_place' => $request->input('favorite_date_place'),
+                'favorite_clothes' => $request->input('favorite_clothes'),
+                'favorite_character' => $request->input('favorite_character'),
+                'favorite_age_range' => $request->input('favorite_age_range'),
+                'notice' => $request->input('notice'),
             ]);
 
         } catch (\Exception $e) {

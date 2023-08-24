@@ -9,14 +9,14 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
-class MakeDateJobCommand extends Command
+class MakeLogDateJobCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'MakeDateJobCommand';
+    protected $signature = 'MakeLogDateJobCommand';
 
     /**
      * The console command description.
@@ -46,7 +46,6 @@ class MakeDateJobCommand extends Command
             try {
                 // log_date_jobsテーブルにレコードを登録
                 foreach ($recordsToMove as $record) {
-
                     $logDateJob = new LogDateJob();
                     $logDateJob->user_id = $record->user_id;
                     $logDateJob->girl_id = $record->girl_id;
@@ -61,15 +60,8 @@ class MakeDateJobCommand extends Command
 
                 // date_jobsテーブルから取得したレコードを削除
                 $recordsToMove->each->delete();
-
-                // ログにメッセージを出力
                 Log::info('デートのジョブを削除し、ログとして残すことに成功しました。');
-
             } catch (\Exception $e) {
-                // 例外が発生した場合の処理
-                // エラーログを出力など、必要な処理を行う
-
-                // 例外メッセージをログに出力
                 Log::error('Error occurred during record move: ' . $e->getMessage());
             }
         }else{

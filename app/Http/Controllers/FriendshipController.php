@@ -11,8 +11,8 @@ class FriendshipController extends Controller
 {
     public function fetchFriendship(Request $request)
     {
-
         $user = $request->user();
+        $me = $user['id'];
 
         //ステータスとして、statueが0は未アクション、1はフォロー中、2はフォローリクエストとする。
 
@@ -20,37 +20,67 @@ class FriendshipController extends Controller
         $followingID = Friendship::where('user_id', $user['id'])
             ->where('status', 1)
             ->pluck('followed_user_id');
-        $followingUser=User::whereIn('id',$followingID)
-            ->get();
 
         $followingRequestID=Friendship::where('user_id',$user['id'])
             ->where('status',2)
             ->pluck('followed_user_id');
-        $followingRequestUser=User::whereIn('id',$followingRequestID)
-            ->get();
 
         //フォローされてる相手とフォローリクエストを飛ばしてきている相手を表示
         $followedID=Friendship::where('followed_user_id',$user['id'])
             ->where('status',1)
             ->pluck('user_id');
-        $followedUser=User::whereIn('id',$followedID)
-            ->get();
 
         $followedRequestID=Friendship::where('followed_user_id',$user['id'])
             ->where('status',2)
             ->pluck('user_id');
-        $followedRequestUser=User::whereIn('id',$followedRequestID)
-            ->get();
 
+        if(!$request["suggestion"]){
+            $followingUser=User::whereIn('id',$followingID)
+                ->get();
+            $followingRequestUser=User::whereIn('id',$followingRequestID)
+                ->get();
+            $followedUser=User::whereIn('id',$followedID)
+                ->get();
+            $followedRequestUser=User::whereIn('id',$followedRequestID)
+                ->get();
 
-        return response()->json([
-            'followingUser' => $followingUser,
-            'requestingUser' => $followingRequestUser,
-            'followedUser' => $followedUser,
-            'requestedUser' => $followedRequestUser
-        ]);
+            return response()->json([
+                'followingUser' => $followingUser,
+                'requestingUser' => $followingRequestUser,
+                'followedUser' => $followedUser,
+                'requestedUser' => $followedRequestUser
+            ]);
 
+        }else{
 
+            //ユーザーをサジェスト検索する
+            $searchText = $request->input('searchText');
+
+            //自身のアカウントにフォロー・フォロワーなど何らかの接点がある人
+            $activeUsers = collect([$me])
+                ->concat($followingID)
+                ->concat($followingRequestID)
+                ->concat($followedID)
+                ->concat($followedRequestID)
+                ->unique()
+                ->values();
+
+            //全く無知の人
+            $strangerIds = User::whereNotIn('id', $activeUsers)
+                ->pluck('id');
+            $stranger = User::whereIn('id', $strangerIds)
+                ->where('name', 'LIKE', '%' . $searchText . '%')
+                ->select('id','name','age','image_url')
+                ->get();
+            $strangerWithStatus = $stranger->map(function ($user) {
+                $user->status = 'stranger'; // 新しいカラムに値をセット
+                return $user;
+            });
+
+            return response()->json([
+                'strangerUser' => $strangerWithStatus,
+            ]);
+        }
     }
 
     public function fetchFriendInfo(Request $request)
@@ -110,4 +140,39 @@ class FriendshipController extends Controller
             }
        }
     }
+
+    public function unfollowingUser(Request $request)
+    {
+        $user = $request->user();
+        $me = $user['id'];
+        $searchText = $request->input('searchText'); // 検索テキストを取得
+
+        $followingUsersId = Friendship::where('user_id',$me)->where('status',1)->pluck('followed_user_id');
+        $followingUsers = User::whereIn('id', $followingUsersId)->where('name', 'LIKE', '%' . $searchText . '%')->select('id','name','age','image_url')->get(); // nameカラムで曖昧検索->select('id', 'name', 'age', 'image_url')->get();
+        $followingUsersWithStatus = $followingUsers->map(function ($user) {
+            $user->status = 'following'; // 新しいカラムに値をセット
+            return $user;
+        });
+
+        $requestingUsersId = Friendship::where('user_id',$me)->where('status',2)->pluck('followed_user_id');
+        $requestingUsers = User::whereIn('id',$requestingUsersId)->where('name', 'LIKE', '%' . $searchText . '%')->select('id','name','age','image_url')->get();
+        $requestingUsersWithStatus = $requestingUsers->map(function ($user) {
+            $user->status = 'requesting'; // 新しいカラムに値をセット
+            return $user;
+        });
+
+        $combinedUsers = collect([$me])->concat($followingUsersId)->concat($requestingUsersId)->unique();
+        Log::debug($combinedUsers);
+
+        $unfollowingUsers = User::whereNotIn('id',$combinedUsers)->where('name', 'LIKE', '%' . $searchText . '%')->select('id','name','age','image_url')->get();
+        $unfollowingUsersWithStatus = $unfollowingUsers->map(function ($user) {
+            $user->status = 'unfollow'; // 新しいカラムに値をセット
+            return $user;
+        });
+        Log::debug($unfollowingUsers);
+        $result = $followingUsersWithStatus->concat($requestingUsersWithStatus)->concat($unfollowingUsersWithStatus);
+
+        return response()->json($result);
+    }
+
 }

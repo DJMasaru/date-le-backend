@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CommentOnDateJob;
 use App\Models\DateJob;
+use App\Models\Friendship;
 use App\Models\GirlsProfile;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -57,6 +60,50 @@ class DateJobController extends Controller
 
             // 成功時の処理を記述
             return 'success';
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return 'error';
+        }
+    }
+
+    public function postComment(Request $request)
+    {
+        try {
+            $user = $request->user();
+            $index = $request->index;
+            $type = $request['type'];
+            $value = $request['comment'];
+
+            if($type != 'friend') {
+                $jobs = DateJob::where('user_id', $user->id)
+                    ->orderBy('date_of_date', 'asc')
+                    ->get();
+                $selectedJob = $jobs->get($index);
+                $newComment = new CommentOnDateJob();
+                $newComment->value = $value;
+                $newComment->user_id = $user['id'];
+                $newComment->job_id = $selectedJob['id'];
+                $newComment->save();
+            }else{
+                $friendData = Friendship::where('user_id', $user->id)
+                    ->where('status', 1)
+                    ->get();
+                $friendIds = $friendData->pluck('followed_user_id');
+                $selectedFriendJob = User::whereIn('id', $friendIds)
+                    ->with(['dateJobs' => function ($q) {
+                        $q->with('girlsProfile')
+                            ->withCount('comment');
+                    }])
+                    ->get()
+                    ->get($index);
+                $dateJobIds = $selectedFriendJob->dateJobs->pluck('id')->implode(',');
+                Log::debug($selectedFriendJob->dateJobs);
+                $newComment = new CommentOnDateJob();
+                $newComment->value = $value;
+                $newComment->user_id = $user['id'];
+                $newComment->job_id = $dateJobIds;
+                $newComment->save();
+            }
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return 'error';
