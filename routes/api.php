@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/date_detail', [DashboardController::class, 'getDateDetail']);
     Route::get('/girls_list', [DateJobController::class, 'fetchGirlsList']);
     Route::post('/make_date_job', [DateJobController::class, 'makeDateJob']);
+    Route::post('/post_comment', [DateJobController::class, 'postComment']);
     Route::get('/girls_info', [GirlsInfoController::class, 'fetchGirlsInfo']);
     Route::delete('/delete_girls_info', [GirlsInfoController::class, 'deleteGirlsInfo']);
     Route::put('/edit_girls_info', [GirlsInfoController::class, 'editGirlsInfo']);
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/friendship', [FriendshipController::class, 'fetchFriendship']);
     Route::get('/friend_info', [FriendshipController::class, 'fetchFriendInfo']);
     Route::delete('/delete_friendship_status', [FriendshipController::class, 'deleteFriendshipStatus']);
+    Route::get('/unfollowing_user', [FriendshipController::class, 'unfollowingUser']);
     Route::put('/put_friendship_status', [FriendshipController::class, 'putFriendshipStatus']);
     Route::post('/post_friendship_status', [FriendshipController::class, 'postFriendshipStatus']);
     Route::get('/user_profile', [UserProfileController::class, 'fetchUserProfile']);
@@ -44,3 +46,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 // 認証不要なルート
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/email_validate', [AuthController::class, 'emailValidate']);

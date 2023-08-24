@@ -46,26 +46,27 @@ class GirlsInfoController extends Controller
             $updateGirl = GirlsProfile::where('user_id', $user['id'])
                 ->where('id', $girlsID)->first();
 
+            //空欄で更新されてもそれが有効になる
             $updateGirl->update([
-                'name' => $request->input('name') ?: $updateGirl->name,
-                'age' => $request->input('age') ?: $updateGirl->age,
-                // 'image_url' => $request->input('image_url') ?: $updateGirl->image_url,
-                'occupation' =>$request->input('occupation') ?: $updateGirl->occupation,
+                'name' => $request->input('name'),
+                'age' => $request->input('age'),
+                'image_url' => $request->input('image_url'),
+                'occupation' =>$request->input('occupation'),
                 'user_id' => $user['id'] ?: $updateGirl->user_id,
-                'address' => $request->input('address') ?: $updateGirl->address,
-                'birthday' => $request->input('birthday') ?: $updateGirl->birthday,
-                'character' => $request->input('character') ?: $updateGirl->character,
-                'feature_first' => $request->input('feature_first') ?: $updateGirl->feature_first,
-                'feature_second' => $request->input('feature_second') ?: $updateGirl->feature_second,
-                'feature_third' => $request->input('feature_third') ?: $updateGirl->feature_third,
-                'hobby' => $request->input('hobby') ?: $updateGirl->hobby,
-                'favorite_foods' => $request->input('favorite_foods') ?: $updateGirl->favorite_foods,
-                'dislike_foods' => $request->input('dislike_foods') ?: $updateGirl->dislike_foods,
-                'favorite_type_of_man' => $request->input('favorite_type_of_man') ?: $updateGirl->favorite_type_of_man,
-                'opportunity_to_meet' => $request->input('opportunity_to_meet') ?: $updateGirl->opportunity_to_meet,
-                'has_boyfriend' => $request->input('has_boyfriend') ?: $updateGirl->has_boyfriend,
-                'count_of_dates' => $request->input('count_of_dates') ?: $updateGirl->count_of_dates,
-                'notice' => $request->input('notice') ?: $updateGirl->notice,
+                'address' => $request->input('address'),
+                'birthday' => $request->input('birthday'),
+                'character' => $request->input('character'),
+                'feature_first' => $request->input('feature_first'),
+                'feature_second' => $request->input('feature_second'),
+                'feature_third' => $request->input('feature_third'),
+                'hobby' => $request->input('hobby'),
+                'favorite_foods' => $request->input('favorite_foods'),
+                'dislike_foods' => $request->input('dislike_foods'),
+                'favorite_type_of_man' => $request->input('favorite_type_of_man'),
+                'opportunity_to_meet' => $request->input('opportunity_to_meet'),
+                'has_boyfriend' => $request->input('has_boyfriend'),
+                'count_of_dates' => $request->input('count_of_dates'),
+                'notice' => $request->input('notice'),
             ]);
 
         } catch (\Exception $e) {

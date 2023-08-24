@@ -28,9 +28,10 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        $name = $validatedData['name'];
-        $email = $validatedData['email'];
-        Mail::send(new RegisterMail($name ,$email));
+//        メールアドレス宛てに登録完了通知を送信する機能だが一旦コメントアウト
+//        $name = $validatedData['name'];
+//        $email = $validatedData['email'];
+//        Mail::send(new RegisterMail($name ,$email));
 
         return response()->json([
             'access_token' => $token,
@@ -54,6 +55,14 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'ログインに失敗しました。入力情報を確認してください。'
             ], 401);
+        }
+    }
+
+    public function emailValidate(Request $request)
+    {
+        $duplicate = User::where('email',$request['email'])->first();
+        if($duplicate){
+            return 'duplicated';
         }
     }
 }

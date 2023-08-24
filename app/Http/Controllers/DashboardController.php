@@ -72,9 +72,7 @@ class DashboardController extends Controller
                     'jobs' => $selectedJob,
                     'comments' => $comments,
                 ]);
-
             }else{
-
             //友人のデート詳細を取得
             $friendData = Friendship::where('user_id', $user->id)
                 ->where('status', 1)

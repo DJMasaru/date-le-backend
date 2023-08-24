@@ -11,7 +11,7 @@ class FriendshipSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     * statusが0は「リクエスト中」1は「フォロー中」
+     * ステータスとして、statueが0は未アクション、1はフォロー中、2はフォローリクエストとする。
      */
     public function run(): void
     {
@@ -32,24 +32,14 @@ class FriendshipSeeder extends Seeder
                 'status' => 1,
             ],
             [
-                'user_id' => '5',
-                'followed_user_id' => '1',
+                'user_id' => '1',
+                'followed_user_id' => '5',
                 'status' => 2,
             ],
             [
                 'user_id' => '1',
                 'followed_user_id' => '6',
-                'status' => 1,
-            ],
-            [
-                'user_id' => '1',
-                'followed_user_id' => '7',
-                'status' => 1,
-            ],
-            [
-                'user_id' => '2',
-                'followed_user_id' => '1',
-                'status' => 1,
+                'status' => 2,
             ],
             [
                 'user_id' => '3',
@@ -62,17 +52,15 @@ class FriendshipSeeder extends Seeder
                 'status' => 1,
             ],
             [
-                'user_id' => '8',
+                'user_id' => '7',
                 'followed_user_id' => '1',
-                'status' => 1,
-            ],
-            [
-                'user_id' => '1',
-                'followed_user_id' => '8',
                 'status' => 2,
             ],
-
-
+            [
+                'user_id' => '8',
+                'followed_user_id' => '1',
+                'status' => 2,
+            ],
         ]);
     }
 }

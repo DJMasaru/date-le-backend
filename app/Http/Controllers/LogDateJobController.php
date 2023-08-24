@@ -26,8 +26,10 @@ class LogDateJobController extends Controller
                 ->with('girlsProfile')
                 ->first();
             $comments = CommentOnDateJob::where('job_id', $dateLog->id)->with('commentByUser')->get();
+            $dataArray = json_decode($comments, true);
+            $commentsCount = collect($dataArray)->count();
 
-            return response()->json(['dateLog' => $dateLog, 'comments' => $comments]);
+            return response()->json(['dateLog' => $dateLog, 'comments' => $comments,'comments_count' => $commentsCount]);
         }
 
 
