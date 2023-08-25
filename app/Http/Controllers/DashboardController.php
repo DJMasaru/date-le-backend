@@ -90,7 +90,7 @@ class DashboardController extends Controller
             ->get($index);
 
             $dateJobIds = $selectedFriendJob->dateJobs->pluck('id');
-            $friendComments = CommentOnDateJob::where('job_id', $dateJobIds)->with('commentByUser')->get();
+            $friendComments = CommentOnDateJob::whereIn('job_id', $dateJobIds)->with('commentByUser')->get();
             }
 
         return response()->json([
