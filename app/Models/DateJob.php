@@ -23,7 +23,7 @@ class DateJob extends Model
     }
     public function user()
     {
-        return $this->hasMany(User::class,'id','user_id');
+        return $this->hasOne(User::class,'id','user_id');
     }
 
     public function comment()

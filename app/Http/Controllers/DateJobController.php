@@ -78,7 +78,7 @@ class DateJobController extends Controller
                 $jobs = DateJob::where('user_id', $user->id)
                     ->orderBy('date_of_date', 'asc')
                     ->get();
-                $selectedJob = $jobs->get($index);
+                $selectedJob = $jobs[$index];
                 $newComment = new CommentOnDateJob();
                 $newComment->value = $value;
                 $newComment->user_id = $user['id'];
@@ -89,15 +89,16 @@ class DateJobController extends Controller
                     ->where('status', 1)
                     ->get();
                 $friendIds = $friendData->pluck('followed_user_id');
-                $selectedFriendJob = User::whereIn('id', $friendIds)
-                    ->with(['dateJobs' => function ($q) {
-                        $q->with('girlsProfile')
-                            ->withCount('comment');
-                    }])
-                    ->get()
-                    ->get($index);
-                $dateJobIds = $selectedFriendJob->dateJobs->pluck('id')->implode(',');
-                Log::debug($selectedFriendJob->dateJobs);
+
+                $selectedFriendJobs = DateJob::whereIn('user_id', $friendIds)
+                    ->orderBy('date_of_date','asc')
+                    ->with('comment')
+                    ->withCount('comment')
+                    ->with('girlsProfile')
+                    ->with('user')
+                    ->get();
+                $selectedFriendJob= $selectedFriendJobs[$index];
+                $dateJobIds = $selectedFriendJob['id'];
                 $newComment = new CommentOnDateJob();
                 $newComment->value = $value;
                 $newComment->user_id = $user['id'];
@@ -109,5 +110,4 @@ class DateJobController extends Controller
             return 'error';
         }
     }
-
 }

@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\CommentOnDateJob;
 use App\Models\DateJob;
 use App\Models\Friendship;
-use App\Models\GirlsProfile;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -27,13 +25,15 @@ class DashboardController extends Controller
             ->where('status', 1)
             ->get();
 
-        $friendIds = $friendData->pluck('followed_user_id'); // 友達のIDを取得
+        $friendIds = $friendData->pluck('followed_user_id');
 
-        $friendDateJobs = User::whereIn('id', $friendIds)
-            ->with(['dateJobs' => function ($q) {
-                $q->with('girlsProfile')
-                    ->withCount('comment');
-            }])
+        //ダッシュボードの一覧。
+        $friendDateJobs = DateJob::whereIn('user_id', $friendIds)
+            ->orderBy('date_of_date','asc')
+            ->with('comment')
+            ->withCount('comment')
+            ->with('girlsProfile')
+            ->with('user')
             ->get();
 
         if (!$jobs) {
@@ -44,7 +44,7 @@ class DashboardController extends Controller
         return response()->json([
             'user' => $user,
             'jobAndProfile' => $jobs,
-            'friendsJobAndProfile' => $friendDateJobs
+            'friendsJobAndProfile' => $friendDateJobs,
         ]);
     }
 
@@ -63,7 +63,7 @@ class DashboardController extends Controller
                     ->get();
 
                 //デートの詳細を確認するためのインデックス番号
-                $selectedJob = $jobs->get($index);
+                $selectedJob = $jobs[$index];
                 $comments = CommentOnDateJob::where('job_id', $selectedJob->id)
                     ->with('commentByUser')
                     ->get();
@@ -81,16 +81,17 @@ class DashboardController extends Controller
             //友達のIDを取得
             $friendIds = $friendData->pluck('followed_user_id');
 
-            $selectedFriendJob = User::whereIn('id', $friendIds)
-            ->with(['dateJobs' => function ($q) {
-                $q->with('girlsProfile')
-                    ->withCount('comment');
-            }])
-            ->get()
-            ->get($index);
+            $selectedFriendJobs = DateJob::whereIn('user_id', $friendIds)
+                ->orderBy('date_of_date','asc')
+                ->with('comment')
+                ->withCount('comment')
+                ->with('girlsProfile')
+                ->with('user')
+                ->get();
+            $selectedFriendJob= $selectedFriendJobs[$index];
 
-            $dateJobIds = $selectedFriendJob->dateJobs->pluck('id');
-            $friendComments = CommentOnDateJob::whereIn('job_id', $dateJobIds)->with('commentByUser')->get();
+            $dateJobIds = $selectedFriendJob['id'];
+            $friendComments = CommentOnDateJob::where('job_id', $dateJobIds)->with('commentByUser')->get();
             }
 
         return response()->json([
