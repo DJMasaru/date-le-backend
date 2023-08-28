@@ -29,7 +29,7 @@ class GirlsInfoController extends Controller
         try {
             $id = $request['girlsInfo']['id'];
 
-            User::where('id', $id)->delete();
+            GirlsProfile::where('id', $id)->delete();
 
             return response()->json(['message' => '削除に成功しました']);
         } catch (\Exception $e) {
