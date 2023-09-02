@@ -12,14 +12,14 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1.10'
-      - name: Setup Testing Containers
-        env:
-          DEFAULT_REGION: ap-northeast-1
-          AWS_ACCOUNT_ID: "000000000000"
-          AWS_ACCESS_KEY_ID: dummy-access-key
-          AWS_SECRET_ACCESS_KEY: dummy-secret-key
-        run: |
-          docker-compose up -d
+#      - name: Setup Testing Containers
+#        env:
+#          DEFAULT_REGION: ap-northeast-1
+#          AWS_ACCOUNT_ID: "000000000000"
+#          AWS_ACCESS_KEY_ID: dummy-access-key
+#          AWS_SECRET_ACCESS_KEY: dummy-secret-key
+#        run: |
+#          docker-compose up -d
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
