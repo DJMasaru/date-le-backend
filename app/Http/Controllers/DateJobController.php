@@ -14,12 +14,12 @@ class DateJobController extends Controller
 {
     public function fetchGirlsList(Request $request)
     {
-
         $user = $request->user();
+
         $girlsName = GirlsProfile::where('user_id',$user['id'])
             ->select('name')->get();
 
-        return $girlsName;
+        return response()->json($girlsName);
     }
 
     public function makeDateJob(Request $request)
