@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use AWS\CRT\Log;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
@@ -63,7 +63,11 @@ class AuthController extends Controller
         }
     }
 
-    public function refreshData(){
+    public function refreshData()
+    {
+//    try {
+        Log::debug('りふれっしゅ！');
+//        DB::beginTransaction(); // トランザクションを開始
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('users')->truncate();
         DB::table('password_reset_tokens')->truncate();
@@ -77,7 +81,13 @@ class AuthController extends Controller
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         Artisan::call('db:seed');
-
-        return response()->json(['message' => 'リフレッシュしました。']);
+        \Illuminate\Support\Facades\Log::debug('りふれっしゅ！');
+        return response()->json(['message' => 'リフレッシュしましたあああ。']);
+//        } catch (\Exception $e) {
+//            DB::rollBack(); // トランザクションをロールバック
+//            Log::error('リフレッシュ中にエラーが発生しました: ' . $e->getMessage());
+//            return response()->json(['message' => 'リフレッシュ中にエラーが発生しました。']);
+//        }
+//    }
     }
 }

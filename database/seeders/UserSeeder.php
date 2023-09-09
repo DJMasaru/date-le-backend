@@ -14,13 +14,15 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $imageUrl="https://date-le-bucket.s3.ap-northeast-3.amazonaws.com/user_images/";
+
         DB::table('users')->insert([
         [
             'name' => 'test',
             'email' => 'example@example.example',
             'email_verified_at' => now(),
             'password'=>Hash::make('exampleexample'),
-            'image_url'=>'hoge',
+            'image_url'=> "$imageUrl"."test.jpg",
             'occupation' => 'Web開発者',
             'birthday' => '1994-08-03',
             'address' => '東京都港区麻布十番',
@@ -41,7 +43,7 @@ class UserSeeder extends Seeder
             'email' => 'example@masaki.example',
             'email_verified_at' => now(),
             'password'=>Hash::make('exampleexample'),
-            'image_url'=>'hoge',
+            'image_url'=> "$imageUrl"."masaki.jpg",
             'occupation' => 'パーソナルトレーナー',
             'birthday' => '1990-05-15',
             'address' => '東京都千代田区',
@@ -62,7 +64,7 @@ class UserSeeder extends Seeder
             'email' => 'example@shinya.example',
             'email_verified_at' => now(),
             'password'=>Hash::make('exampleexample'),
-            'image_url'=>'hoge',
+            'image_url'=>"$imageUrl"."shinya.jpg",
             'occupation' => '自動車メーカー',
             'birthday' => '1992-11-30',
             'address' => '東京都世田谷区',
