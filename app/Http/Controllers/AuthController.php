@@ -65,9 +65,8 @@ class AuthController extends Controller
 
     public function refreshData()
     {
-//    try {
-        Log::debug('りふれっしゅ！');
-//        DB::beginTransaction(); // トランザクションを開始
+    try {
+        DB::beginTransaction(); // トランザクションを開始
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('users')->truncate();
         DB::table('password_reset_tokens')->truncate();
@@ -81,13 +80,12 @@ class AuthController extends Controller
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         Artisan::call('db:seed');
-        \Illuminate\Support\Facades\Log::debug('りふれっしゅ！');
-        return response()->json(['message' => 'リフレッシュしましたあああ。']);
-//        } catch (\Exception $e) {
-//            DB::rollBack(); // トランザクションをロールバック
-//            Log::error('リフレッシュ中にエラーが発生しました: ' . $e->getMessage());
-//            return response()->json(['message' => 'リフレッシュ中にエラーが発生しました。']);
-//        }
-//    }
+
+        return response()->json(['message' => 'リフレッシュしました。']);
+        } catch (\Exception $e) {
+            DB::rollBack(); // トランザクションをロールバック
+            Log::error('リフレッシュ中にエラーが発生しました: ' . $e->getMessage());
+            return response()->json(['message' => 'リフレッシュ中にエラーが発生しました。']);
+        }
     }
 }
