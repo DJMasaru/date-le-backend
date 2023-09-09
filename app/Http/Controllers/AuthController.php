@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use AWS\CRT\Log;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -58,5 +61,23 @@ class AuthController extends Controller
         } else {
             return response()->json(['message' => 'non-duplicated']);
         }
+    }
+
+    public function refreshData(){
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('users')->truncate();
+        DB::table('password_reset_tokens')->truncate();
+        DB::table('failed_jobs')->truncate();
+        DB::table('personal_access_tokens')->truncate();
+        DB::table('girls_profiles')->truncate();
+        DB::table('date_jobs')->truncate();
+        DB::table('comment_on_date_jobs')->truncate();
+        DB::table('friendships')->truncate();
+        DB::table('log_date_jobs')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        Artisan::call('db:seed');
+
+        return response()->json(['message' => 'リフレッシュしました。']);
     }
 }

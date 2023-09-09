@@ -47,3 +47,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/email_validate', [AuthController::class, 'emailValidate']);
+Route::get('/refresh_data', [AuthController::class, 'refreshData']);
