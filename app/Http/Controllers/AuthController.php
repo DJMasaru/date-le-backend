@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\RegisterMail;
+use AWS\CRT\Log;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -27,11 +27,6 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
-
-//        メールアドレス宛てに登録完了通知を送信する機能だが一旦コメントアウト
-//        $name = $validatedData['name'];
-//        $email = $validatedData['email'];
-//        Mail::send(new RegisterMail($name ,$email));
 
         return response()->json([
             'access_token' => $token,
@@ -60,9 +55,29 @@ class AuthController extends Controller
 
     public function emailValidate(Request $request)
     {
-        $duplicate = User::where('email',$request['email'])->first();
-        if($duplicate){
-            return 'duplicated';
+        $duplicate = User::where('email', $request['email'])->first();
+        if ($duplicate) {
+            return response()->json(['message' => 'duplicated']);
+        } else {
+            return response()->json(['message' => 'non-duplicated']);
         }
+    }
+
+    public function refreshData(){
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('users')->truncate();
+        DB::table('password_reset_tokens')->truncate();
+        DB::table('failed_jobs')->truncate();
+        DB::table('personal_access_tokens')->truncate();
+        DB::table('girls_profiles')->truncate();
+        DB::table('date_jobs')->truncate();
+        DB::table('comment_on_date_jobs')->truncate();
+        DB::table('friendships')->truncate();
+        DB::table('log_date_jobs')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        Artisan::call('db:seed');
+
+        return response()->json(['message' => 'リフレッシュしました。']);
     }
 }

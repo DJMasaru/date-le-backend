@@ -15,7 +15,7 @@ class GirlsProfileSeeder extends Seeder
     {
         DB::table('girls_profiles')->insert([
             [
-            'name' => 'みかこ',
+            'name' => '京子',
             'age' => 22,
             'occupation' => '化粧品会社',
             'image_url'=> 'hogehoge',
@@ -61,7 +61,7 @@ class GirlsProfileSeeder extends Seeder
             'updated_at' => now(),
             ],
             [
-            'name' => 'りょうか',
+            'name' => 'あやか',
             'age' => 22,
             'occupation' => '公務員',
             'image_url'=> 'hogehoge',
@@ -84,7 +84,7 @@ class GirlsProfileSeeder extends Seeder
             'updated_at' => now(),
             ],
             [
-            'name' => 'かほ',
+            'name' => 'ちほ',
             'age' => 22,
             'occupation' => '美容師',
             'image_url'=> 'hogehoge',
